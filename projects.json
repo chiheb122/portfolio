@@ -1,0 +1,93 @@
+[
+    {
+        "id": "bachelor",
+        "title": {
+            "fr": "Projet de Bachelor : Schématisation visuelle des configurations réseau et détection intelligente des erreurs par l'IA",
+            "en": "Bachelor Project: Visual Network Configuration Mapping and Intelligent Error Detection with AI"
+        },
+        "short": {
+            "fr": "Extraction de configs réseau + schématisation + détection d’erreurs (IA).",
+            "en": "Network config extraction + mapping + error detection (AI)."
+        },
+        "description": {
+            "fr": "Ce projet vise à développer une solution innovante pour l'extraction automatique des configurations réseau, leur schématisation visuelle et la détection intelligente des erreurs à l'aide de techniques d'intelligence artificielle.",
+            "en": "This project aims to develop an innovative solution for automatic extraction of network configurations, visual mapping, and intelligent error detection using AI techniques."
+        },
+        "technologies": [
+            "Python",
+            "HTML/CSS"
+        ],
+        "video": "video/Bachelor.mov",
+        "poster": "/img/bachelor.png",
+        "github": "https://github.com/chiheb122/bachelor-autoconfig-shematisation"
+    },
+    {
+        "id": "rebuilteasy",
+        "title": {
+            "fr": "RebuiltEasy",
+            "en": "RebuiltEasy"
+        },
+        "short": {
+            "fr": "Plateforme de mise en relation entre artisans, propriétaires et investisseurs avec map interactive de Genève.",
+            "en": "Platform connecting craftsmen, owners, and investors with an interactive Geneva map."
+        },
+        "description": {
+            "fr": "Projet sur mandat : plateforme de mise en relation entre artisans, propriétaires d'immeubles et investisseurs. Map interactive pour visualiser les catégories des bâtiments à rénover à Genève.",
+            "en": "Mandate project: platform connecting craftsmen, building owners, and investors. Interactive map to visualize building categories to renovate in Geneva."
+        },
+        "technologies": [
+            "Next.js",
+            "MongoDB",
+            "Laravel"
+        ],
+        "video": "video/Rebuilteasy.mp4",
+        "poster": "/img/rebuilt.jpg",
+        "github": null
+    },
+    {
+        "id": "chibaplayer",
+        "title": {
+            "fr": "ChibaPlayer",
+            "en": "ChibaPlayer"
+        },
+        "short": {
+            "fr": "Application Android pour lire les fichiers m3u8 de streaming vidéo en direct.",
+            "en": "Android app to play m3u8 live streaming video files."
+        },
+        "description": {
+            "fr": "Application Android avec deux lecteurs intégrés (ExoPlayer et VLC). Langages : Java et Kotlin.",
+            "en": "Android app with two integrated players (ExoPlayer and VLC). Languages: Java and Kotlin."
+        },
+        "technologies": [
+            "Java",
+            "Kotlin",
+            "ExoPlayer",
+            "VLC"
+        ],
+        "video": "video/ChibaPlayer.mp4",
+        "poster": "/img/chibaPlayer.png",
+        "github": "https://github.com/chiheb122/ChibaPlayer"
+    },
+    {
+        "id": "m5stack",
+        "title": {
+            "fr": "M5stack STATION MÉTÉO",
+            "en": "M5stack WEATHER STATION"
+        },
+        "short": {
+            "fr": "Station météo connectée basée sur M5Stack.",
+            "en": "Connected weather station based on M5Stack."
+        },
+        "description": {
+            "fr": "Collecte et affichage des données météorologiques en temps réel.",
+            "en": "Real-time collection and display of weather data."
+        },
+        "technologies": [
+            "M5Stack",
+            "IoT",
+            "Python"
+        ],
+        "image": "img/m5stack.png",
+        "github": "https://github.com/chiheb122/M5stack_cc2"
+    }
+]

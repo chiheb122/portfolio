@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Portfolio – Chiheb Bidani</title>
+</head>
+
+<body>
+    <header>
+        <div class="typewriter" style="--n: 18;">
+            <h1>Junior Developer</h1>
+        </div>
+        <div class="lang-switch" style="position:absolute;top:18px;right:32px;">
+            <label class="switch">
+                <input type="checkbox" id="toggle-lang">
+                <span class="slider"></span>
+            </label>
+            <span id="lang-label" style="margin-left:8px;font-weight:700;">FR</span>
+        </div>
+    </header>
+
+    <div class="background">
+        <div class="container">
+            <!-- Colonne gauche -->
+            <aside class="shape" aria-labelledby="name">
+                <img class="portfolio-image" src="https://avatars.githubusercontent.com/u/113928409?v=4"
+                    alt="Avatar de Chiheb Bidani">
+                <div id="info"></div>
+                <div class="social-links">
+                    <a href="https://github.com/chiheb122" target="_blank" rel="noopener noreferrer"
+                        aria-label="GitHub">
+                        <img src="img/github.svg" alt="">
+                    </a>
+                    <a href="https://www.linkedin.com/in/chiheb-bidani" target="_blank" rel="noopener noreferrer"
+                        aria-label="LinkedIn">
+                        <img src="img/linkedin.svg" alt="">
+                    </a>
+                    <a href="mailto:bidani.chiheb@yahoo.fr" aria-label="Email">
+                        <img src="img/mail.svg" alt="">
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Colonne droite -->
+            <div class="content">
+                <nav class="navbar" aria-label="Navigation">
+                    <ul>
+                        <li><a href="#home" data-page="home" class="active">Home</a></li>
+                        <li><a href="#skills" data-page="skills">Skills</a></li>
+                        <li><a href="#projects" data-page="projects">Projects</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Zone qui change -->
+                <section id="content" class="panel" tabindex="-1" aria-live="polite">
+                    <!-- Contenu injecté par JS -->
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal caché pour les infos projet -->
+    <div id="project-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-description"></p>
+            <div id="modal-technologies"></div>
+            <div id="modal-media"></div>
+            <a id="modal-github" class="btn" target="_blank" style="display:none;">GitHub</a>
+        </div>
+    </div>
+
+    <!-- Templates invisibles -->
+    <template id="tpl-home">
+        <h3>Hello, I'm Chiheb 👋</h3>
+        <p class="hero-sub">Full-Stack Developer · I build clean and efficient apps.</p>
+        <div class="cta">
+            <a class="btn" href="#projects" data-page="projects">See my work</a>
+            <a class="btn ghost" href="mailto:bidani.chiheb@yahoo.fr">Get in touch</a>
+        </div>
+    </template>
+
+    <template id="tpl-skills">
+        <h3>Skills</h3>
+        <ul class="grid">
+            <div class="tags">
+                <span class="tag"> <img src="https://cdn.simpleicons.org/nextdotjs" alt="">Next.js</span>
+                <span class="tag"> <img src="https://cdn.simpleicons.org/python" alt="">Python</span>
+                <span class="tag"> <img src="https://cdn.simpleicons.org/javascript" alt="">JavaScript</span>
+                <span class="tag"> <img src="https://cdn.simpleicons.org/docker" alt="">Docker</span>
+                <span class="tag"> <img src="https://cdn.simpleicons.org/laravel" alt="">Laravel</span>
+                <span class="tag"> <img src="https://cdn.simpleicons.org/git" alt="">Git</span>
+                <span class="tag"> <img src="https://cdn.simpleicons.org/Django" alt="">Django</span>
+                <span class="tag"> <img src="https://cdn.simpleicons.org/MongoDB" alt="">MongoDB</span>
+                <span class="tag"> <img src="https://img.icons8.com/color/200/java-coffee-cup-logo.png"
+                        alt="">JAVA</span>
+                <span class="tag"> <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZcjpXa2jw9utNc4i8_c6blmBgCSxCEJnP5w&s"
+                        alt="">VueJS</span>
+                <span class="tag"> <img src="https://cdn.simpleicons.org/MySQL" alt="">MySQL</span>
+                <span class="tag"> <img src="https://cdn.simpleicons.org/PHP" alt="">PHP</span>
+            </div>
+        </ul>
+    </template>
+
+    <template id="tpl-projects">
+        <h3>Projects</h3>
+        <div class="cards" id="projects-cards"></div>
+    </template>
+
+    <script>
+        // --- Mini routeur : change le contenu selon le hash ---
+        const routes = {
+            home: document.getElementById('tpl-home'),
+            skills: document.getElementById('tpl-skills'),
+            projects: document.getElementById('tpl-projects')
+        };
+
+        const contentEl = document.getElementById('content');
+        const navLinks = Array.from(document.querySelectorAll('.navbar a, .cta a.btn'));
+
+        // Fetch des projets et génération des cartes
+        fetch('projects.json')
+            .then(res => res.json())
+            .then(data => {
+                projectsData = data;
+                // Génère les cartes projets si la page "projects" est affichée
+                if (location.hash.replace('#', '') === 'projects') {
+                    renderProjectsCards();
+                }
+            });
+        // Fetch des informations personnelles
+        fetch('info.json')
+            .then(res => res.json())
+            .then(data => {
+                renderPersonalInfo();
+            });
+
+
+
+        let projectsData = [];
+        // Change language toggle
+        document.getElementById('toggle-lang').addEventListener('change', function () {
+            const label = document.getElementById('lang-label');
+            if (this.checked) {
+                label.textContent = 'EN';
+                renderProjectsCards('EN');
+                renderPersonalInfo('EN');
+            } else {
+                label.textContent = 'FR';
+                renderProjectsCards('FR');
+                renderPersonalInfo('FR');
+            }
+        });
+
+        // Affiche les informations personnelles
+        function renderPersonalInfo(lang = 'FR') {
+            const infoContainer = document.getElementById('info');
+            if (!infoContainer) return;
+
+            fetch('info.json')
+                .then(res => res.json())
+                .then(data => {
+                    infoContainer.innerHTML = `
+                        <h2 id="name" class="name">${data[0].name}</h2>
+                        <p class="description">
+                            ${data[0].description[lang.toLowerCase()]}
+                        </p>
+                    `;
+                });
+        }
+
+        // Génère les cartes projets dynamiquement
+        function renderProjectsCards(lang = 'FR') {
+            const cardsContainer = document.getElementById('projects-cards');
+            if (!cardsContainer) return;
+            cardsContainer.innerHTML = '';
+
+            // Pas de filtre, on affiche tous les projets
+            projectsData.forEach(project => {
+                const card = document.createElement('article');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="info_icon" title="Plus d'informations" aria-label="Plus d'informations" data-id="${project.id}">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/Minimalist_info_Icon.png" alt="info" width="24" height="24">
+                    </div>
+                    <h4>${project.title[lang.toLowerCase()]}</h4>
+                    <p>${project.short[lang.toLowerCase()]}</p>
+                    <div class="card-actions">
+                        ${project.video ? `
+                            <h1 class="video-title">Vidéo</h1>
+                            <video controls class="video-demo" poster="${project.poster || ''}">
+                                <source src="${project.video}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        ` : ''}
+                        ${project.image ? `<img src="${project.image}" width="200" height="200" alt="${project.title[lang.toLowerCase()]}">` : ''}
+                        ${project.github ? `<a class="btn" href="${project.github}" target="_blank">GitHub</a>` : ''}
+                    </div>
+                `;
+                cardsContainer.appendChild(card);
+            });
+
+            // Ajoute les listeners sur les icônes info
+            cardsContainer.querySelectorAll('.info_icon').forEach(icon => {
+                icon.addEventListener('click', function () {
+                    const projectId = this.dataset.id;
+                    const project = projectsData.find(p => p.id === projectId);
+                    if (project) showProjectModal(project, lang);
+                });
+            });
+        }
+
+        // Affiche le modal projet
+        function showProjectModal(project, lang = 'FR') {
+            document.getElementById('modal-title').textContent = project.title[lang.toLowerCase()];
+            document.getElementById('modal-description').textContent = project.description[lang.toLowerCase()];
+            document.getElementById('modal-technologies').innerHTML =
+                '<strong>Technologies :</strong> ' + project.technologies.join(', ');
+            const githubBtn = document.getElementById('modal-github');
+            if (project.github) {
+                githubBtn.href = project.github;
+                githubBtn.style.display = '';
+            } else {
+                githubBtn.style.display = 'none';
+            }
+            const mediaDiv = document.getElementById('modal-media');
+            mediaDiv.innerHTML = '';
+            // if (project.video) {
+            //     mediaDiv.innerHTML = `
+            //         <video controls style="width:100%;border-radius:12px;margin-top:12px;" poster="${project.poster || ''}">
+            //             <source src="${project.video}" type="video/mp4">
+            //             Your browser does not support the video tag.
+            //         </video>
+            //     `;
+            // } else if (project.image) {
+            //     mediaDiv.innerHTML = `<img src="${project.image}" style="width:100%;border-radius:12px;margin-top:12px;" alt="${project.title[lang.toLowerCase()]}">`;
+            // }
+            document.getElementById('project-modal').style.display = 'flex';
+        }
+
+        // Fermer le modal
+        document.querySelector('.close').onclick = function () {
+            document.getElementById('project-modal').style.display = 'none';
+        };
+        window.onclick = function (event) {
+            if (event.target === document.getElementById('project-modal')) {
+                document.getElementById('project-modal').style.display = 'none';
+            }
+        };
+
+
+
+        function render(page) {
+            const tpl = routes[page] || routes.home;
+            contentEl.innerHTML = '';
+            contentEl.appendChild(tpl.content.cloneNode(true));
+            document.querySelectorAll('.navbar a').forEach(a =>
+                a.classList.toggle('active', a.dataset.page === page)
+            );
+            contentEl.focus();
+            // Génère les cartes projets si on est sur la page projects
+            if (page === 'projects' && projectsData.length) {
+                renderProjectsCards();
+            }
+        }
+
+        function go(page) {
+            history.pushState({ page }, '', `#${page}`);
+            render(page);
+        }
+
+        // Clicks navbar/cta
+        navLinks.forEach(a => {
+            a.addEventListener('click', e => {
+                const page = a.dataset.page;
+                if (page) {
+                    e.preventDefault();
+                    go(page);
+                }
+            });
+        });
+
+        // Navigation via bouton "retour" du navigateur
+        window.addEventListener('popstate', (e) => {
+            const page = (e.state && e.state.page) || location.hash.replace('#', '') || 'home';
+            render(page);
+        });
+
+        // Chargement initial
+        const initial = location.hash.replace('#', '') || 'home';
+        history.replaceState({ page: initial }, '', `#${initial}`);
+        render(initial);
+
+
+    </script>
+</body>
+
+<footer>
+    <p>&copy; 2025 Chiheb Bidani. All rights reserved.</p>
+</footer>
+
+</html>
