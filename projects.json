@@ -18,7 +18,7 @@
             "HTML/CSS"
         ],
         "video": "video/Bachelor.mov",
-        "poster": "/img/bachelor.png",
+        "poster": "img/bachelor.png",
         "github": "https://github.com/chiheb122/bachelor-autoconfig-shematisation"
     },
     {
@@ -41,7 +41,7 @@
             "Laravel"
         ],
         "video": "video/Rebuilteasy.mp4",
-        "poster": "/img/rebuilt.jpg",
+        "poster": "img/rebuilt.jpg",
         "github": null
     },
     {
@@ -65,7 +65,7 @@
             "VLC"
         ],
         "video": "video/ChibaPlayer.mp4",
-        "poster": "/img/chibaPlayer.png",
+        "poster": "img/chibaPlayer.png",
         "github": "https://github.com/chiheb122/ChibaPlayer"
     },
     {
